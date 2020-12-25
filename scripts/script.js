@@ -29,11 +29,14 @@ const render = function () {
         } else {
             todoList.append(li);
         }
+        let itemIndex = toDoData.indexOf(item);
         
         const btnTodoComplete = li.querySelector('.todo-complete');
 
         btnTodoComplete.addEventListener('click', function () {
             item.completed = !item.completed;
+            toDoData.splice(itemIndex, 'item');
+            localStorage.setItem('newTodo', JSON.stringify(item));
             render();
         });
 
@@ -42,50 +45,31 @@ const render = function () {
         btnTodoRemove.addEventListener('click', function () {
             
             li.style.display = 'none';
-            localStorage.removeItem('newTodo', JSON.stringify('newTodo'));
-            
-            
-            
+            toDoData.splice(itemIndex,1);
+            localStorage.setItem('newTodo', JSON.stringify(item));
+            render(); 
         });
-
     });
-        
-      
 };
 
 todoControl.addEventListener('submit', function (event) {
     event.preventDefault();
     if (headerInput.value.trim() !== '') {
         
-    
-    const newTodo = {
-        value: headerInput.value,
-        completed: false
-    };
+        const newTodo = {
+            value: headerInput.value,
+            completed: false
+        };
         toDoData.push(newTodo);
-        render();
-        headerInput.value = ''; 
+        headerInput.value = '';
         localStorage.setItem('newTodo', JSON.stringify(newTodo));
+        render();
     }
-    
-    
-    
-    // const newTodoArr = [];
-    // for (let i in newTodo) {
-    //     if (newTodo.hasOwnProperty(i)) {
-    //        newTodoArr.push(i); 
-    //     }
-    // }
-
-    
-    
-    
-      
 });
-const getLocalStorage = function () {
-    toDoData.item = JSON.parse(localStorage.getItem('newTodo'));
-    render();
     
+const getLocalStorage = function () {
+    toDoData.push(JSON.parse(localStorage.getItem('newTodo'))); 
+    render();
 };
-getLocalStorage();
+getLocalStorage();    
 render();
