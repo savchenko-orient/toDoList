@@ -5,9 +5,7 @@ const todoControl = document.querySelector('.todo-control'),
     todoList = document.querySelector('.todo-list'),
     todoCompleted = document.querySelector('.todo-completed');
 
-let toDoData = [
-    
-];
+const toDoData = [] || localStorage.getItem('newTodo');
 
 const render = function () {
 
@@ -60,20 +58,13 @@ todoControl.addEventListener('submit', function (event) {
         };
         toDoData.push(newTodo);
         headerInput.value = '';
-        localStorage.setItem('newTodo', JSON.stringify(newTodo));
+        localStorage.setItem('newTodo', JSON.stringify(toDoData));
         render();
     }
 });
     
-const getLocalStorage = function () {
-    toDoData = JSON.parse(localStorage.getItem('newTodo')); 
-    render();
-};
 
-if (typeof localStorage.newTodo !== null && localStorage.newTodo !== undefined &&  localStorage.newTodo) {
-    
-    getLocalStorage();  
-    render();
-}
+render();
+
 
 
