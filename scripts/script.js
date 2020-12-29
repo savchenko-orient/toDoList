@@ -69,5 +69,11 @@ const getLocalStorage = function () {
     toDoData = JSON.parse(localStorage.getItem('newTodo')); 
     render();
 };
-getLocalStorage();    
-render();
+
+if (typeof localStorage.newTodo !== null && localStorage.newTodo !== undefined &&  localStorage.newTodo) {
+    
+    getLocalStorage();  
+    render();
+}
+
+
